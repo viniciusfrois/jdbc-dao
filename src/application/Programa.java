@@ -42,8 +42,10 @@ public class Programa {
 		vendedorDao.atualizar(vendedor);
 		System.out.println("Atualizado com Sucesso!");
 		
-		
-		
+		System.out.println("=====TEST 5: Deletar um Vendedor =====");
+		vendedor = vendedorDao.buscarId(3);
+		vendedorDao.deletarById(vendedor.getId());
+		System.out.println("Deletado com Sucesso!");		
 		
 		}
 	

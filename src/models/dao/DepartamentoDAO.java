@@ -7,7 +7,7 @@ public interface DepartamentoDAO {
 
 	void inserir (Departamento obj);
 	void atualizar (Departamento obj);
-	void deletarById (Departamento obj);
+	void deletarById (Integer id);
 	Departamento buscarId (Integer id);
 	List <Departamento> buscarTodos ();
 	
