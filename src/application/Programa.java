@@ -1,5 +1,6 @@
 package application;
 
+import java.util.Date;
 import java.util.List;
 
 import models.Departamento;
@@ -29,7 +30,11 @@ public class Programa {
 		for (Vendedor vend : lista) {
 			System.out.println(vend);
 		}
-
-	}
+		
+		System.out.println("=====TEST 4: Inserir um novo Vendedor =====");
+		Vendedor novoVendedor = new Vendedor (null, "Greg", "greg@gmail.com", new Date(), 4000.0, departamento);
+		vendedorDao.inserir(novoVendedor);
+		System.out.println("Cadastrado com Sucesso! novo ID = " + novoVendedor.getId());
+		}
 
 }

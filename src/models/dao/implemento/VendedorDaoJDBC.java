@@ -1,9 +1,11 @@
 package models.dao.implemento;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +27,38 @@ public class VendedorDaoJDBC implements VendedorDAO {
 
 	@Override
 	public void inserir(Vendedor obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+			"INSERT INTO vendedor " 
+			+ "(Nome, Email, DataNascimento, Salario, DepartamentoId) "
+			+ "VALUES " 
+			+ "(?, ?, ?, ?, ?)",
+			Statement.RETURN_GENERATED_KEYS);
+			
+			st.setString(1, obj.getNome());
+			st.setString(2, obj.getEmail());
+			st.setDate(3, new Date(obj.getDataNascimento().getTime()));
+			st.setDouble(4, obj.getSalario());
+			st.setInt(5, obj.getDepartamento().getId());	
+			
+			int linhasAfetadas = st.executeUpdate();
+			if (linhasAfetadas > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					obj.setId(id);
+					}
+				DBConnect.closeResultSet(rs);
+			} else {
+				throw new DbException("Erro, nenhuma linha foi afetada!");
+			}
+			
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DBConnect.closeStatement(st);
+		}
 
 	}
 
@@ -71,24 +104,6 @@ public class VendedorDaoJDBC implements VendedorDAO {
 
 	}
 	
-	private Departamento instanciaDepartamento(ResultSet rs) throws SQLException {
-		Departamento dep = new Departamento();
-		dep.setId(rs.getInt("DepartamentoId"));
-		dep.setNome(rs.getString("DepNome"));
-		return dep;
-	}
-	
-	private Vendedor instanciaVendedor(ResultSet rs, Departamento dep) throws SQLException {
-		Vendedor vend = new Vendedor();
-		vend.setId(rs.getInt("Id"));
-		vend.setNome(rs.getString("Nome"));
-		vend.setEmail(rs.getString("Email"));
-		vend.setSalario(rs.getDouble("Salario"));
-		vend.setDataNascimento(rs.getDate("DataNascimento"));
-		vend.setDepartamento(dep);
-		return vend;
-	}
-
 	@Override
 	public List<Vendedor> buscarTodos() {
 		PreparedStatement st = null;
@@ -160,4 +175,21 @@ public class VendedorDaoJDBC implements VendedorDAO {
 		}
 	}
 
+	private Departamento instanciaDepartamento(ResultSet rs) throws SQLException {
+		Departamento dep = new Departamento();
+		dep.setId(rs.getInt("DepartamentoId"));
+		dep.setNome(rs.getString("DepNome"));
+		return dep;
+	}
+	
+	private Vendedor instanciaVendedor(ResultSet rs, Departamento dep) throws SQLException {
+		Vendedor vend = new Vendedor();
+		vend.setId(rs.getInt("Id"));
+		vend.setNome(rs.getString("Nome"));
+		vend.setEmail(rs.getString("Email"));
+		vend.setSalario(rs.getDouble("Salario"));
+		vend.setDataNascimento(rs.getDate("DataNascimento"));
+		vend.setDepartamento(dep);
+		return vend;
+	}
 }
