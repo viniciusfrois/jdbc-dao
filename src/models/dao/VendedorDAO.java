@@ -1,7 +1,6 @@
 package models.dao;
 
 import java.util.List;
-
 import models.Vendedor;
 
 public interface VendedorDAO {
