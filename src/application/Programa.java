@@ -35,6 +35,18 @@ public class Programa {
 		Vendedor novoVendedor = new Vendedor (null, "Greg", "greg@gmail.com", new Date(), 4000.0, departamento);
 		vendedorDao.inserir(novoVendedor);
 		System.out.println("Cadastrado com Sucesso! novo ID = " + novoVendedor.getId());
+		
+		System.out.println("=====TEST 5: Atualziar um Vendedor =====");
+		vendedor = vendedorDao.buscarId(1);
+		vendedor.setNome("Martha Waine");
+		vendedorDao.atualizar(vendedor);
+		System.out.println("Atualizado com Sucesso!");
+		
+		
+		
+		
 		}
+	
+		
 
 }
