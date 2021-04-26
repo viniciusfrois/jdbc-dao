@@ -68,7 +68,7 @@ public class VendedorDaoJDBC implements VendedorDAO {
 		try {
 			st = conn.prepareStatement(
 			"UPDATE vendedor " 
-			+ "SET Nome = ?, Email = ?, DataNascimento = ?, Salario = ?, DepartamentoId = ?) "
+			+ "SET Nome = ?, Email = ?, DataNascimento = ?, Salario = ?, DepartamentoId = ? "
 			+ "WHERE Id = ?",
 			Statement.RETURN_GENERATED_KEYS);
 			

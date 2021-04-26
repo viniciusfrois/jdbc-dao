@@ -8,7 +8,7 @@ import models.Vendedor;
 import models.dao.FabricaDAO;
 import models.dao.VendedorDAO;
 
-public class Programa {
+public class ProgramaVendedor {
 
 	public static void main(String[] args) {
 		
@@ -47,8 +47,6 @@ public class Programa {
 		vendedorDao.deletarById(vendedor.getId());
 		System.out.println("Deletado com Sucesso!");		
 		
-		}
-	
-		
+		}		
 
 }
